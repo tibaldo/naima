@@ -305,12 +305,10 @@ class Synchrotron(BaseElectron):
             AKP10 Eq. D7
 
             Factor ~2 performance gain in using cbrt(x)**n vs x**(n/3.)
-            Invoking crbt only once reduced time by ~40%
             """
-            cb = cbrt(x)
-            gt1 = 1.808 * cb / np.sqrt(1 + 3.4 * cb**2.)
-            gt2 = 1 + 2.210 * cb**2. + 0.347 * cb**4.
-            gt3 = 1 + 1.353 * cb**2. + 0.217 * cb**4.
+            gt1 = 1.808 * cbrt(x) / np.sqrt(1 + 3.4 * cbrt(x)**2.)
+            gt2 = 1 + 2.210 * cbrt(x)**2. + 0.347 * cbrt(x)**4.
+            gt3 = 1 + 1.353 * cbrt(x)**2. + 0.217 * cbrt(x)**4.
             return gt1 * (gt2 / gt3) * np.exp(-x)
 
         log.debug('calc_sy: Starting synchrotron computation with AKB2010...')
