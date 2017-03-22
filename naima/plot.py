@@ -363,16 +363,22 @@ def _read_or_calc_samples(sampler,
         pars = chain[np.random.randint(len(chain), size=n_samples)]
         blobs = []
 
-        p = Pool(threads)
-        modelouts = p.map(partial(sampler.modelfn, data=data), pars)
-        p.close()
-        p.terminate()
-
-        for modelout in modelouts:
+        # p = Pool(threads)
+        # modelouts = p.map(partial(sampler.modelfn, data), pars)
+        # p.close()
+        # p.terminate()
+        for p in pars:
+            modelout = sampler.modelfn(p, data)
             if isinstance(modelout, np.ndarray):
-                blobs.append([modelout])
+                blobs.append([modelout,])
             else:
                 blobs.append(modelout)
+
+        # for modelout in modelouts:
+        #     if isinstance(modelout, np.ndarray):
+        #         blobs.append([modelout])
+        #     else:
+        #         blobs.append(modelout)
 
         modelx, model = _process_blob(
             blobs, modelidx=modelidx, energy=data['energy'])
