@@ -364,7 +364,7 @@ def _read_or_calc_samples(sampler,
         blobs = []
 
         p = Pool(threads)
-        modelouts = p.map(partial(sampler.modelfn, data=data), pars)
+        modelouts = p.map(partial(sampler.modelfn,data), pars)
         p.close()
         p.terminate()
 
